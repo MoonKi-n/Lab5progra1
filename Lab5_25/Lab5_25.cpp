@@ -1,15 +1,22 @@
 #include <iostream>
+#include <memory>
+#include <vector>
 #include "Shape.h"
+#include "Circle.h"
 #include "Square.h"
-using namespace std;
+#include "Triangle.h"
 
 int main()
 {
-    Shape* SoyFigura = new Square(2.0);
+    std::vector<std::unique_ptr<Shape>> shapes;
 
-    double Result = SoyFigura->calculateArea();
+    shapes.push_back(std::make_unique<Circle>(5.0));
+    shapes.push_back(std::make_unique<Square>(4.0));
+    shapes.push_back(std::make_unique<Triangle>(6.0, 8.0));
 
-    cout << "El area del cuadrado es \n";
-    cout<< Result;
+    for (const auto& shape : shapes) {
+        std::cout << shape->getName() << " area: " << shape->calculateArea() << std::endl;
+    }
+
+    return 0;
 }
-
